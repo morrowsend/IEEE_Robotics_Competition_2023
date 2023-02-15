@@ -1,0 +1,68 @@
+// Distance sensor (SENDER)
+/*
+This code is for the "Sender Arduino". In breif, this code will send signals
+to the reciever arduino, which will then control a set of stepper motors for
+rover movement.
+
+
+*/
+
+// Define pin locations
+const int trigPin1 = 2;
+const int echoPin1 = 3;
+const int trigPin2 = 4;
+const int echoPin2 = 5;
+const int trigPin3 = 6;
+const int echoPin3 = 7;
+
+// Defines other variables
+long duration;
+float distance1 = 0.0; 
+float distance2 = 0.0;
+float distance3 = 0.0;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(trigPin1,OUTPUT);
+  pinMode(trigPin2,OUTPUT);
+  pinMode(trigPin3,OUTPUT);
+  pinMode(echoPin1,INPUT);
+  pinMode(echoPin2,INPUT);
+  pinMode(echoPin3,INPUT);
+
+  // initalize serial monitor
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Serial.print("Distance before: ");
+  Serial.println(distance1);
+  delayMicroseconds(2);
+  distance1 = distance_sensor_1();
+  delayMicroseconds(2);
+  Serial.print("Distance after: ");
+  Serial.println(distance1);
+
+}
+
+// function for distnace sensors
+float distance_sensor_1(){
+  // define internal function variables
+  float distance;
+
+  // clear the trig pin
+  digitalWrite(trigPin1, LOW);
+  delayMicroseconds(2);
+
+  // pulse for 10 seconds
+  digitalWrite(trigPin1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin1, LOW);
+
+  // calculate distnace
+  duration = pulseIn(echoPin1,HIGH);
+  distance = duration * 0.034 / 2;
+  return distance;
+}
+
