@@ -7,11 +7,17 @@ rover movement.
 
 */
 
-// Define pin locations
+
+
+// right distnace sensor
 const int trigPin1 = 2;
 const int echoPin1 = 3;
+
+// middle distance sensor
 const int trigPin2 = 4;
 const int echoPin2 = 5;
+
+// left distance sensor
 const int trigPin3 = 6;
 const int echoPin3 = 7;
 
@@ -39,7 +45,9 @@ void loop() {
   Serial.print("Distance before: ");
   Serial.println(distance1);
   delayMicroseconds(2);
-  distance1 = distance_sensor_1();
+
+  distance1 = distance_sensor(trigPin3, echoPin3);
+  
   delayMicroseconds(2);
   Serial.print("Distance after: ");
   Serial.println(distance1);
@@ -47,22 +55,30 @@ void loop() {
 }
 
 // function for distnace sensors
-float distance_sensor_1(){
+float distance_sensor(const int triggerPin, const int echoPin){
+  /*
+
+  Note: if distance is under 2 cm, the distnace sensor will incorrectly read
+  values over 1000.
+
+  */
+
+  // define user values
+  float distance = 0.0;
+
   // define internal function variables
-  float distance;
-
-  // clear the trig pin
-  digitalWrite(trigPin1, LOW);
+  pinMode(triggerPin, OUTPUT);
+  digitalWrite(triggerPin, LOW);
   delayMicroseconds(2);
-
-  // pulse for 10 seconds
-  digitalWrite(trigPin1, HIGH);
+  
+  // Sets the trigger pin to HIGH state for 10 microseconds
+  digitalWrite(triggerPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(trigPin1, LOW);
+  digitalWrite(triggerPin, LOW);
+  pinMode(echoPin, INPUT);
 
-  // calculate distnace
-  duration = pulseIn(echoPin1,HIGH);
-  distance = duration * 0.034 / 2;
+  // Reads the echo pin, and returns the sound wave travel time in microseconds
+  distance = 0.034 / 2 * pulseIn(echoPin, HIGH);
   return distance;
 }
 
