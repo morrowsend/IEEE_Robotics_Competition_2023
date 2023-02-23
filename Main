@@ -1,0 +1,43 @@
+// Motor A connections
+int enA = 5;
+int in1 = 4;
+int in2 = 7;
+// Motor B connections
+int in3 = 11;
+int in4 = 9;
+int enB = 10 ;
+
+// 10 and 5 are PWM
+// 6 and 7 are output signals for motor B
+// 8 and 9 are output signals for motor A 
+
+void setup() {
+  // Set all the motor control pins to outputs
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  
+  // Turn off motors - Initial state
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void loop() {
+
+  // begin the forward
+  
+  forward(255,255,1.5);
+  delay(2000);
+  backward(255,255,1.5);
+  delay(2000);
+  
+  // Now change motor directions
+  
+}
+
+
