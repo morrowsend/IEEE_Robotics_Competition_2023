@@ -47,7 +47,7 @@ void loop() {
     
   if (Serial1.available()>0){
    
-   
+   message = Serial1.readString();
    // allocate a dynmaic memory heap for each character array
 	int max_mem = 4;
 	int length = message.length();
