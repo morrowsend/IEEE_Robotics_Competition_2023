@@ -36,10 +36,8 @@ void setup() {
 
 void loop() {
 
-  // begin the forward
-  float distance1_message;
-
   /*
+  // basic test code
   forward(150,150,1.5);
   delay(2000);
   backward(150,150,1.5);
@@ -48,16 +46,68 @@ void loop() {
 
     
   if (Serial1.available()>0){
-    distance1_message = Serial1.parseFloat(SKIP_ALL, '\n');
-    if(distance1_message > 1000) {
-      backward(255,255,1.5);
-      delay(20);
-    }
-    else if (distance1_message < 1000) {
-      // pause(1.5);
-    }
-  }
-  
-  // Now change motor directions
-  
+   
+   
+   // allocate a dynmaic memory heap for each character array
+	int max_mem = 4;
+	int length = message.length();
+	char* sensor1 = (char*)malloc(max_mem * sizeof(char));
+	char* sensor2 = (char*)malloc(max_mem * sizeof(char));
+	char* sensor3 = (char*)malloc(max_mem * sizeof(char));
+
+	// search through the message to identify letters and numbers
+	for (int i = 0; i < message.length(); i++) {
+		// check and see if letter A was found
+		if (message[i] == 'A') {
+
+			int j = 1;
+			int k = 0;
+			while (isdigit(message[i + j])) {
+				std::cout << message[i + j];
+				sensor1[k] = message[i + j];
+				j++;
+				k++;
+			}
+			i = i + j;
+		}
+		// check to see if letter B was found
+		if (message[i] == 'B') {
+
+			int j = 1;
+			int k = 0;
+			while (isdigit(message[i + j])) {
+				std::cout << message[i + j];
+				sensor2[k] = message[i + j];
+				j++;
+				k++;
+			}
+			i = i + j;
+		}
+		// check to see if letter C was found
+		if (message[i] == 'C') {
+
+			int j = 1;
+			int k = 0;
+			while (isdigit(message[i + j])) {
+				std::cout << message[i + j];
+				sensor3[k] = message[i + j];
+				j++;
+				k++;
+			}
+			i = i + j;
+		}
+	}
+
+	// convert characters into a number
+	int A_sensor_1 = atoi(sensor1);
+	int B_sensor_2 = atoi(sensor2);
+	int C_sensor_3 = atoi(sensor3);
+
+	// free allocated memory heap to save space on the hard drive
+	free(sensor1);
+	free(sensor2);
+	free(sensor3);
+   
+   }
+   
 }
