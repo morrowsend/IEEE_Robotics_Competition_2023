@@ -16,6 +16,15 @@ int in4 = 9;
 int enB = 10;
 // Message parameters
 String message;
+// Motion parameters
+ // Rotation parameters
+ int A_rotation_speed = 65;
+ int B_rotation_speed = 65;
+ float rotation_time_90 = 0.96;
+ // Linear motion parameters
+ int A_forward_speed = 65;
+ int B_forward_speed = 65;
+ float forward_time_1 = 0.677;
 
 
 // 10 and 5 are PWM
@@ -60,13 +69,17 @@ void loop() {
   // Servo motor commands
 
   // Push the plow  down
+  /*
   myservo1.write(90);
   myservo2.write(90);
   delay(4000);
+  */
  
-  if (Serial1.available()>0){
    
   message = Serial1.readString();
+  //if(message){
+  //  Serial.println(message);
+  //}
   // allocate a dynmaic memory heap for each character array
   int max_mem = 4;
   int length = message.length();
@@ -118,15 +131,52 @@ void loop() {
   }
 
   // convert characters into a number
-  int A_sensor_1 = atoi(sensor1);
-  int B_sensor_2 = atoi(sensor2);
-  int C_sensor_3 = atoi(sensor3);
+  int B_sensor_2 = atoi(sensor1); // This is left
+  int A_sensor_1 = atoi(sensor2); // This is the front
+  int C_sensor_3 = atoi(sensor3); // This is right
+  // Serial.println(A_sensor_1);
+
+  // Auto Code
+   forward(A_forward_speed,B_forward_speed,forward_time_1*2);
+   delay(500);
+   clockwise(A_rotation_speed,B_rotation_speed,rotation_time_90);
+   delay(20);
+   
+    while (A_sensor_1 > 10 || B_sensor_2 > 10 || C_sensor_3 > 10) {
+      forward(A_forward_speed,B_forward_speed,1);
+      delay(20);
+      if (A_sensor_1 < 5 || A_sensor_1 >= 1000){
+        backward(A_forward_speed,B_forward_speed, 1);
+        delay(20);
+        clockwise(A_rotation_speed,B_rotation_speed,rotation_time_90);
+        delay(500);
+      }
+      if (B_sensor_2 < 5 || B_sensor_2 > 1000){
+        clockwise(A_rotation_speed,B_rotation_speed,0.2);
+        delay(500);
+      }
+      if (C_sensor_3 < 5 || C_sensor_3 > 1000){
+        counterClockwise(A_rotation_speed,B_rotation_speed,0.2);
+        delay(500);
+      }
+      if ( (A_sensor_1 < 5 || A_sensor_1 > 1000)&&(B_sensor_2 < 5 || B_sensor_2 > 1000) ){
+        backward(A_forward_speed,B_forward_speed, 1);
+        delay(20);
+        clockwise(A_rotation_speed,B_rotation_speed,rotation_time_90);
+        delay(500);
+      }
+      if ( (A_sensor_1 < 10 || A_sensor_1 > 1000)&&(C_sensor_3 < 10 || C_sensor_3 > 1000) ){
+        backward(A_forward_speed,B_forward_speed, 1);
+        delay(20);
+        counterClockwise(A_rotation_speed,B_rotation_speed,rotation_time_90);
+        delay(500);
+      }
+    }
 
   // free allocated memory heap to save space on the hard drive
   free(sensor1);
   free(sensor2);
   free(sensor3);
    
-   }
-   
 }
+   
