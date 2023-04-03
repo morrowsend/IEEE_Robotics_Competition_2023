@@ -5,8 +5,8 @@
 #include <Servo.h>
 
 // Plow parameters
-Servo myservo1;
-Servo myservo2;
+Servo servo1;
+Servo servo2;
 
 // Back Motor Connections
 int Back_Left_Motor_Enable = 2;
@@ -19,7 +19,7 @@ int Back_Right_Motor_S2 = 22;
 // Front Motor Connections
 int Front_Left_Motor_Enable = 3;
 int Front_Right_Motor_Enable = Front_Left_Motor_Enable;
-int Front_Left_Motor_S1 = 34;
+int Front_Left_Motor_S1 = 34; 
 int Front_Left_Motor_S2 = 36;
 int Front_Right_Motor_S1 = 40;
 int Front_Right_Motor_S2 = 38;
@@ -77,27 +77,58 @@ void setup() {
   digitalWrite(Front_Right_Motor_S2, LOW);
 
   // Servo motor parameters
-  myservo1.attach(12);
-  myservo2.attach(13);
+  servo2.attach(9);
+  servo1.attach(10);
+  servo1.write(120); // reset position
+  servo2.write(50);
 
   // initalize serial monitor
   Serial1.begin(9600);
   Serial.begin(9600);
 
   // Auto start functionality
-/*
+  /*
     while(outputValue < 250){
     sensorValue = analogRead(analogInPin);
     outputValue = map(sensorValue, 0, 1023, 0, 255);
+    delay(5);
     }
-*/
+  */
 }
 
 void loop() {
 
   
-  int Rear_Speed = 65;
-  int Forward_Speed = 65;
-  delay(5000);
-  Hard_Left(75,75,3);
+  int Rear_Speed = 70;
+  int Forward_Speed = 70;
+  // RED SQUARE //
+    delay(7000);
+    forward(80,80,4);
+    delay(20);
+    forward(40,40,2); 
+    delay(20);
+    servo2.write(130); // Red chip bucket down
+    delay(1000);
+    servo2.write(50); // Red chip bucket up
+  // GREEN SQUARE //
+    delay(2000);
+    Hard_Right(80,80,6.5); 
+    delay(20);
+    forward(40,40,2);
+    servo1.write(30); // Green chip bucket down
+    delay(1000);
+    servo1.write(120); // Green chip bucket up
+  // RECYCLING //
+    delay(20);
+  // LIGHT SWITCH //
+    backward(80,80,7);
+    delay(20);
+    //get to light switch
+    Hard_Left(85,85,3);
+    delay(20);
+    backward(40,40,2);
+    delay(20);
+    Hard_Right(80,80,4);
+    delay(20);
+    delay(1000);
 }
