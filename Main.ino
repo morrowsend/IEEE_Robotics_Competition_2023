@@ -1,4 +1,3 @@
-// master
 // Written by Keanu J. Ammons and John Clay
 
 // Include files
@@ -87,48 +86,101 @@ void setup() {
   Serial.begin(9600);
 
   // Auto start functionality
-  /*
-    while(outputValue < 250){
+  
+    while(outputValue < 200){
     sensorValue = analogRead(analogInPin);
     outputValue = map(sensorValue, 0, 1023, 0, 255);
     delay(5);
     }
-  */
+  
 }
 
 void loop() {
 
+  // CONSTANTS //
   
   int Rear_Speed = 70;
   int Forward_Speed = 70;
+  int n = 2;
+  
   // RED SQUARE //
-    delay(7000);
+  
+    delay(50);
     forward(80,80,4);
     delay(20);
-    forward(40,40,2); 
+    forward(30,30,1.5); 
     delay(20);
     servo2.write(130); // Red chip bucket down
     delay(1000);
     servo2.write(50); // Red chip bucket up
+
   // GREEN SQUARE //
+  
     delay(2000);
-    Hard_Right(80,80,6.5); 
+    Hard_Right(80,80,6); 
     delay(20);
-    forward(40,40,2);
+    Hard_Right(65,65,1);
+    delay(20);
+    forward(30,30,1.5);
+    delay(20);
     servo1.write(30); // Green chip bucket down
     delay(1000);
     servo1.write(120); // Green chip bucket up
+    
   // RECYCLING //
+  backward(80,80,6.7);
+  delay(20);
+  forward(80,80,6.5);
+  delay(20);
+  forward(35,35,1.5);
+  delay(20);
+  Hard_Left(80,80,1.5);;
+  delay(20);
+  
+  for (int i = 0; i < n; i++) {
+    backward(80,80,6.2);
     delay(20);
-  // LIGHT SWITCH //
-    backward(80,80,7);
+    forward(80,80,6);
     delay(20);
-    //get to light switch
-    Hard_Left(85,85,3);
+    forward(35,35 ,2);
     delay(20);
-    backward(40,40,2);
+    Hard_Left(80,80,1.5);;
     delay(20);
-    Hard_Right(80,80,4);
-    delay(20);
-    delay(1000);
+  }
+  backward(80,80,6.2);
+  delay(20);
+  Hard_Left(80,80,1);
+  delay(20);
+  Hard_Left(65,65,0.5);
+  delay(20);
+  backward(80,80,.5);
+  delay(20);
+  Hard_Right(80,80,4.7);
+  delay(20);
+  forward(80,80,2);
+  delay(20);
+  Hard_Right(80,80,1.5);
+  delay(20);
+  Hard_Right(65,65,0.5);
+  delay(20);
+  backward(80,80,2.1);
+  delay(20);
+
+  // LIGHTSWITCH //
+
+  Hard_Left(80,80,6);
+  delay(20);
+  Hard_Left(65,65,1);
+  delay(20);
+  backward(80,80,2.5);
+  delay(20);
+  backward(30,30,0.5);
+  delay(20);
+  Hard_Right(80,80,5);
+  delay(20);
+
+  // STOP //
+
+  pause(100);
+  
 }
