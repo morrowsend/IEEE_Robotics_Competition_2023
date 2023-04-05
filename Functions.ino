@@ -1,15 +1,3 @@
-void testServo(){
-
-  myservo1.write(90);
-  myservo2.write(90);
-  delay(4000);
-
-  // Push the plow back down
-  myservo1.write(0);
-  myservo2.write(0);
-  delay(4000);
-  
-}
 
 void pause(float delayTime){
 
@@ -53,14 +41,14 @@ void backward(int Rear_Speed, int Forward_Speed, float delayTime){
   analogWrite(Front_Right_Motor_Enable, Forward_Speed);
   
   // Move motors forward
-  digitalWrite(Back_Left_Motor_S1, LOW);
-  digitalWrite(Back_Left_Motor_S2, HIGH);
+  digitalWrite(Back_Left_Motor_S1, HIGH);
+  digitalWrite(Back_Left_Motor_S2, LOW);
   digitalWrite(Back_Right_Motor_S1, LOW);
   digitalWrite(Back_Right_Motor_S2, HIGH);
   digitalWrite(Front_Left_Motor_S1, LOW);
   digitalWrite(Front_Left_Motor_S2, HIGH);
-  digitalWrite(Front_Right_Motor_S1, LOW);
-  digitalWrite(Front_Right_Motor_S2, HIGH);
+  digitalWrite(Front_Right_Motor_S1, HIGH);
+  digitalWrite(Front_Right_Motor_S2, LOW);
 
   delay(20);
 
@@ -99,10 +87,10 @@ void Hard_Left(int Rear_Speed, int Forward_Speed, float delayTime){
   // make the rover take a hard left
   digitalWrite(Front_Left_Motor_S1, LOW);
   digitalWrite(Front_Left_Motor_S2, HIGH);
-  digitalWrite(Front_Right_Motor_S1, HIGH);
-  digitalWrite(Front_Right_Motor_S2, LOW);
-  digitalWrite(Back_Left_Motor_S1, HIGH);
-  digitalWrite(Back_Left_Motor_S2, LOW);
+  digitalWrite(Front_Right_Motor_S1, LOW);
+  digitalWrite(Front_Right_Motor_S2, HIGH);
+  digitalWrite(Back_Left_Motor_S1, LOW);
+  digitalWrite(Back_Left_Motor_S2, HIGH);
   digitalWrite(Back_Right_Motor_S1, LOW);
   digitalWrite(Back_Right_Motor_S2, HIGH);
   
@@ -143,10 +131,10 @@ void Hard_Right(int Rear_Speed, int Forward_Speed, float delayTime){
   // make the rover take a hard right
   digitalWrite(Front_Left_Motor_S1, HIGH);
   digitalWrite(Front_Left_Motor_S2, LOW);
-  digitalWrite(Front_Right_Motor_S1, LOW);
-  digitalWrite(Front_Right_Motor_S2, HIGH);
-  digitalWrite(Back_Left_Motor_S1, LOW);
-  digitalWrite(Back_Left_Motor_S2, HIGH);
+  digitalWrite(Front_Right_Motor_S1, HIGH);
+  digitalWrite(Front_Right_Motor_S2, LOW);
+  digitalWrite(Back_Left_Motor_S1, HIGH);
+  digitalWrite(Back_Left_Motor_S2, LOW);
   digitalWrite(Back_Right_Motor_S1, HIGH);
   digitalWrite(Back_Right_Motor_S2, LOW);
   
@@ -184,14 +172,14 @@ void forward(int Rear_Speed, int Forward_Speed, float delayTime){
   analogWrite(Front_Right_Motor_Enable, Forward_Speed);
   
   // reverse the direction
-  digitalWrite(Back_Left_Motor_S1, HIGH);
-  digitalWrite(Back_Left_Motor_S2, LOW);
+  digitalWrite(Back_Left_Motor_S1, LOW);
+  digitalWrite(Back_Left_Motor_S2, HIGH);
   digitalWrite(Back_Right_Motor_S1, HIGH);
   digitalWrite(Back_Right_Motor_S2, LOW);
   digitalWrite(Front_Left_Motor_S1, HIGH);
   digitalWrite(Front_Left_Motor_S2, LOW);
-  digitalWrite(Front_Right_Motor_S1, HIGH);
-  digitalWrite(Front_Right_Motor_S2, LOW);
+  digitalWrite(Front_Right_Motor_S1, LOW);
+  digitalWrite(Front_Right_Motor_S2, HIGH);
 
   delay(20);
    
@@ -211,4 +199,36 @@ void forward(int Rear_Speed, int Forward_Speed, float delayTime){
   digitalWrite(Back_Right_Motor_S2, LOW);
 
   delay(20);
+}
+
+
+
+void full_Course(){
+
+  int Rear_Speed = 70;
+  int Forward_Speed = 70;
+  // get to the red square
+  delay(5000);
+  forward(71,71,1.3);
+  delay(20);
+  forward(40,40,0.25); 
+  //get to the green square
+  delay(2000);
+  Hard_Right(85,85,1.6);
+  delay(20);
+  Hard_Right(80,80,0.5);
+  delay(20);
+  forward(40,40,0.25);
+  //go to recycling
+  delay(2000);
+  backward(85,85,5);
+  delay(20);
+  //get to light switch
+  Hard_Left(85,85,1.0);
+  delay(20);
+  backward(40,40,1.0);
+  delay(20);
+  Hard_Left(80,80,1.0);
+  delay(2000);
+  
 }
